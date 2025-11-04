@@ -15,7 +15,7 @@ for n = 1:10
     V = V(:, end-n:end);
     condV(n) = cond(V' * V);
     p_deriv = polyder(p);
-    y_deriv = polyval(p_deriv, t_scaled);
+    y_deriv = polyval(p_deriv, t_scaled) / std(t);
     err(n) = sqrt(mean((y_deriv - y_true).^2));
 end
 
@@ -30,3 +30,5 @@ semilogy(1:10, err, '-o');
 xlabel('Polynomial degree');
 ylabel('L_2 error of derivative');
 title('Derivative L_2 Error vs Polynomial Degree');
+
+report_table('PartB_Condition_Report.txt', 1:10, condV, err);
